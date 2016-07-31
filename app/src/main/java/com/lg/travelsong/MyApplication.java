@@ -2,7 +2,7 @@ package com.lg.travelsong;
 
 import android.app.Application;
 
-import com.lg.travelsong.utils.LogUtils;
+import com.lg.travelsong.utils.MyLogUtils;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -20,8 +20,9 @@ public class MyApplication extends Application {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
-                LogUtils.logi("MyApplication", "");
+                MyLogUtils.logCatch("MyApplication", "");
             }
         });
+
     }
 }

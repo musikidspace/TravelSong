@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.lg.travelsong.R;
-import com.lg.travelsong.utils.MyBitMapUtils;
+import com.lg.travelsong.utils.MyBitmapUtils;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class GuideActivity extends BaseActivity {
 
-    private int[] mGuideImgs = new int[]{R.drawable.start_i0, R.drawable.start_i1, R.drawable.start_i2,
+    private final int[] mGuideImgs = new int[]{R.drawable.start_i0, R.drawable.start_i1, R.drawable.start_i2,
             R.drawable.start_i3, R.drawable.start_i4, R.drawable.start_i5, R.drawable.start_i6, R.drawable.start_i7};
     private ArrayList<ImageView> mIVList;
     private Context mContext;
@@ -43,10 +43,11 @@ public class GuideActivity extends BaseActivity {
 
     //初始化数据
     private void initData() {
-        mIVList = new ArrayList<ImageView>();
+        mIVList = new ArrayList<>();
+        MyBitmapUtils myBitmapUtils = MyBitmapUtils.getInstance(mContext);
         for (int guideImg : mGuideImgs) {
             ImageView iv = new ImageView(mContext);
-            iv.setImageBitmap(MyBitMapUtils.readBitMap(mContext,guideImg));
+            iv.setImageBitmap(myBitmapUtils.readBitMap(mContext, guideImg));
             mIVList.add(iv);
         }
         vp_guide.setAdapter(new GuideAdapter());
