@@ -13,7 +13,7 @@ public class MyLogUtils {
     /**
      * 调试日志打印，调试时将flag设为true，发布则将flag改为false
      *
-     * @param tag 建议传类名方便调试
+     * @param tag 建议传类名-->方法名，方便调试
      * @param msg 输出的日志信息
      */
     public static void logi(String tag, String msg) {
@@ -27,7 +27,7 @@ public class MyLogUtils {
     /**
      * 运行异常日志打印收集
      *
-     * @param tag 建议传类名方便定位问题
+     * @param tag 建议传类名-->方法名，方便定位问题
      * @param msg 输出的日志信息
      */
     public static void logCatch(String tag, String msg) {

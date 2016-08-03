@@ -4,21 +4,26 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
+import com.lg.travelsong.utils.bean.BitmapTask_no;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * BitMap相关方法
  *
- * @author LuoYi on 2016/8/4
+ * @author LuoYi on 2016/7/30
  */
-public class MyBitmapUtils {
+public class MyBitmapUtils_no {
 
-    private static MyBitmapUtils sMyBitmapUtils;
+    private static MyBitmapUtils_no sMyBitmapUtils;
 
     private Context mContext;
+    private int type;
 
-    private MyBitmapUtils(Context context) {
+    private MyBitmapUtils_no(Context context) {
         mContext = context;
     }
 
@@ -27,11 +32,11 @@ public class MyBitmapUtils {
      *
      * @return MyBitmapUtils对象
      */
-    public static MyBitmapUtils getInstance(Context context) {
+    public static MyBitmapUtils_no getInstance(Context context) {
         if (sMyBitmapUtils == null) {
             synchronized (MyBitmapUtils_no.class) {
                 if (sMyBitmapUtils == null) {
-                    sMyBitmapUtils = new MyBitmapUtils(context);
+                    sMyBitmapUtils = new MyBitmapUtils_no(context);
                 }
             }
         }
@@ -41,11 +46,12 @@ public class MyBitmapUtils {
     /**
      * 根据id获取原图片
      *
-     * @param resId 图片id
+     * @param context 上下文
+     * @param resId   图片id
      * @return 原图
      */
-    public Bitmap readBitMap(int resId) {
-        InputStream is = mContext.getResources().openRawResource(resId);
+    public Bitmap readBitMap(Context context, int resId) {
+        InputStream is = context.getResources().openRawResource(resId);
         Bitmap bm = BitmapFactory.decodeStream(is, null, null);
         MyCloseUtils.doClose(is);
         return bm;
@@ -54,16 +60,17 @@ public class MyBitmapUtils {
     /**
      * 根据id按高度获取压缩图片
      *
-     * @param resId  图片id
-     * @param height 需要返回图片的高度
+     * @param context 上下文
+     * @param resId   图片id
+     * @param height  需要返回图片的高度
      * @return 压缩后的图片
      */
-    public Bitmap readSampleBitMap(int resId, int height) {
+    public Bitmap readSampleBitMap(Context context, int resId, int height) {
         //1.不加载图片获取图片参数
         BitmapFactory.Options options = new BitmapFactory.Options();
         //inJustDecodeBounds设为true那么将不返回实际的bitmap
         options.inJustDecodeBounds = true;
-        InputStream is = mContext.getResources().openRawResource(resId);
+        InputStream is = context.getResources().openRawResource(resId);
         BitmapFactory.decodeStream(is, null, options);
         //2.计算缩放比，重新加载图片
         options.inSampleSize = options.outHeight / height > 0 ? options.outHeight / height : 1;
@@ -79,11 +86,34 @@ public class MyBitmapUtils {
      * @param name 图片名
      * @return 返回bitmap
      */
-    public Bitmap readBitmapFromAssets(String name) throws Exception {
-        AssetManager am = mContext.getResources().getAssets();
+    public Bitmap readBitmapFromAssets(Context context, String name) throws IOException {
+        AssetManager am = context.getResources().getAssets();
         InputStream is = am.open(name);
         Bitmap bm = BitmapFactory.decodeStream(is, null, null);
         MyCloseUtils.doClose(is);
         return bm;
+    }
+
+    /**
+     * 根据id获取异步加载原图片
+     * @param iv ImageView
+     * @param resId 资源Id
+     */
+    public void setBitmap(ImageView iv, int resId){
+        type = 0;
+        BitmapTaskFactory_no.getInstance().create(type).execute(mContext, iv, resId);
+    }
+
+    /**
+     * 根据文件名从assets中读取图片，异步加载
+     * @param iv ImageView
+     * @param name 图片名
+     * @return BitmapTask_no
+     */
+    public BitmapTask_no setBitmapFromAssets(ImageView iv, String name){
+        type = 1;
+        BitmapTask_no bitmapTask = BitmapTaskFactory_no.getInstance().create(type);
+        bitmapTask.execute(mContext, iv, name);
+        return bitmapTask;
     }
 }

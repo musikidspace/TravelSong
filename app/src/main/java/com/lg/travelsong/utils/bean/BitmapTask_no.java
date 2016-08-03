@@ -6,10 +6,11 @@ import android.support.v4.util.LruCache;
 
 /**
  * BitmapTask类型
+ *
  * @author LuoYi on 2016/7/31
  */
 
-public class BitmapTask extends AsyncTask<Object, Integer, LruCache<String, Bitmap>> {
+public class BitmapTask_no extends AsyncTask<Object, Integer, LruCache<String, Bitmap>> {
 
     @Override
     protected void onPreExecute() {
@@ -31,8 +32,6 @@ public class BitmapTask extends AsyncTask<Object, Integer, LruCache<String, Bitm
         super.onPostExecute(lruCache);
     }
 
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
+    public void notifyRecyle() {
     }
 }

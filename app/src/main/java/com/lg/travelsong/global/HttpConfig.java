@@ -8,4 +8,6 @@ public class HttpConfig {
     public static final String HOSTURL = "http://githuber.imwork.net/travelsong/";
 
     public static final String SYSTIME = "systime";
+
+    public static final String CONFIG = "config.xml";
 }

@@ -2,9 +2,7 @@ package com.lg.travelsong;
 
 import android.app.Application;
 
-import com.lg.travelsong.utils.MyLogUtils;
-
-import java.lang.Thread.UncaughtExceptionHandler;
+import com.lg.travelsong.global.AppProperty;
 
 /**
  * 自定义Application
@@ -16,13 +14,14 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppProperty.initVersionCode(this);
         //设置捕获全局为捕获的异常捕获器
-        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                MyLogUtils.logCatch("MyApplication", "");
-            }
-        });
+//        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread thread, Throwable throwable) {
+//                MyLogUtils.logCatch("MyApplication", "");
+//            }
+//        });
 
     }
 }
