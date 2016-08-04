@@ -1,5 +1,6 @@
 package com.lg.travelsong.utils;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * http工具类
@@ -30,9 +32,10 @@ public class MyHttpUtils {
     private MyHandler mHandler;
     private int mConnectTimeout = 5 * 1000;
     private int mReadTimeout = 5 * 1000;
-    public static boolean sGetCookies = false;//默认不读取cookies，外部
+    private Context mContext;
 
-    public MyHttpUtils() {
+    public MyHttpUtils(Context context) {
+        mContext = context;
         mHandler = new MyHandler();
     }
 
@@ -42,36 +45,11 @@ public class MyHttpUtils {
      * @param connectTimeout 连接超时
      * @param readTimeout    读取超时
      */
-    public MyHttpUtils(int connectTimeout, int readTimeout) {
-        this();
+    public MyHttpUtils(Context context, int connectTimeout, int readTimeout) {
+        this(context);
         mConnectTimeout = connectTimeout;
         mReadTimeout = readTimeout;
     }
-
-    /**
-     * 设置开启解析cookies的方法
-     *
-     * @param getCookies 是否从返回的输入流解析cookies
-     */
-    public MyHttpUtils(boolean getCookies) {
-        this();
-        sGetCookies = getCookies;
-    }
-
-    /**
-     * 设置开启解析cookies,并设置超时的方法
-     *
-     * @param connectTimeout 连接超时
-     * @param readTimeout    读取超时
-     * @param getCookies     是否从返回的输入流解析cookies
-     */
-    public MyHttpUtils(boolean getCookies, int connectTimeout, int readTimeout) {
-        this();
-        sGetCookies = getCookies;
-        mConnectTimeout = connectTimeout;
-        mReadTimeout = readTimeout;
-    }
-
 
     /**
      * 使用内部类创建Handler，Handler对象会隐式地持有一个外部类对象（通常是一个Activity）的引用
@@ -88,10 +66,6 @@ public class MyHttpUtils {
             if (msg.obj instanceof HttpCallBack) {
                 callBack = (HttpCallBack) msg.obj;
                 result = msg.getData().getString("result");
-                if (sGetCookies){
-                    String cookies = msg.getData().getString("cookies");
-                    result = result + ";getCookiesWhenNeed:" + cookies;
-                }
                 MyLogUtils.logi("MyHttpUtils-->result", result);
             }
             switch (msg.what) {
@@ -136,7 +110,9 @@ public class MyHttpUtils {
                     conn.setConnectTimeout(mConnectTimeout);
                     conn.setReadTimeout(mReadTimeout);
                     // 设置通用的请求属性
-                    conn.setRequestProperty("user-agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
+                    conn.setRequestProperty("User-Agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
+//                    conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
+                    conn.setRequestProperty("Cookie", URLEncoder.encode("name=我是Cookie","UTF-8"));
                     // 建立实际的连接
                     conn.connect();
                     // 判断响应状态
@@ -162,9 +138,6 @@ public class MyHttpUtils {
                 } finally {
                     if (conn != null) {
                         conn.disconnect();
-                    }
-                    if (sGetCookies) {
-                        bundle.putString("cookies", conn.getHeaderField("cookies"));
                     }
                     mMessage.obj = callBack;
                     mMessage.setData(bundle);
@@ -203,6 +176,7 @@ public class MyHttpUtils {
                     // servlet就可以直接使用request.getParameter("username");直接得到所需要信息
                     conn.setRequestProperty("contentType", "application/x-www-form-urlencoded");
                     conn.setRequestProperty("user-agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
+                    conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
                     // 发送POST请求必须设置允许输出
                     conn.setDoOutput(true);
                     // 发送POST请求必须设置允许输入
@@ -237,9 +211,6 @@ public class MyHttpUtils {
                 } finally {
                     if (conn != null) {
                         conn.disconnect();
-                    }
-                    if (sGetCookies) {
-                        bundle.putString("cookies", conn.getHeaderField("cookies"));
                     }
                     mMessage.obj = callBack;
                     mMessage.setData(bundle);

@@ -9,5 +9,5 @@ public class HttpConfig {
 
     public static final String SYSTIME = "systime";
 
-    public static final String CONFIG = "config.xml";
+    public static final String CONFIG = "config";
 }

@@ -1,7 +1,6 @@
 package com.lg.travelsong.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.util.LruCache;
@@ -10,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.lg.travelsong.R;
 import com.lg.travelsong.utils.MyBitmapUtils;
@@ -29,6 +29,7 @@ public class GuideActivity extends BaseActivity {
     private LruCache<String, Bitmap> mLruCache;
     private Context mContext;
     private ViewPager vp_guide;
+    private LinearLayout ll_points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class GuideActivity extends BaseActivity {
     private void initView() {
         mContext = this;
         vp_guide = (ViewPager) findViewById(R.id.vp_guide);
+        ll_points = (LinearLayout) findViewById(R.id.ll_points);
     }
 
     //初始化数据
@@ -54,8 +56,8 @@ public class GuideActivity extends BaseActivity {
                 return bitmap.getByteCount();
             }
         };
-        Bitmap bitmap;
         MyBitmapUtils myBitmapUtils = MyBitmapUtils.getInstance(mContext);
+        Bitmap bitmap;
         for (int i = 0; i < mGuideImgs.length; i++) {
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -66,26 +68,6 @@ public class GuideActivity extends BaseActivity {
         }
         vp_guide.setAdapter(new GuideAdapter());
 
-        vp_guide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == mIVList.size() - 1) {
-                    Intent intent = new Intent(GuideActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private class GuideAdapter extends PagerAdapter {
@@ -111,10 +93,5 @@ public class GuideActivity extends BaseActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

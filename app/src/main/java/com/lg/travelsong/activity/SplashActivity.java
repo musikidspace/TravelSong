@@ -26,6 +26,7 @@ public class SplashActivity extends BaseActivity {
     private MyBitmapUtils mMyBitmapUtils;
     private Bitmap adBitmap;
     private Intent mIntent = new Intent();
+    private String mResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,12 @@ public class SplashActivity extends BaseActivity {
 
     //初始化数据
     private void initData() {
-        new MyHttpUtils(true).httpPost(HttpConfig.HOSTURL + HttpConfig.CONFIG, null, new MyHttpUtils.HttpCallBack() {
+        new MyHttpUtils(mContext).httpGet(HttpConfig.HOSTURL + HttpConfig.CONFIG, null, new MyHttpUtils.HttpCallBack() {
 
             @Override
             public void onSuccess(String result) {
                 MyLogUtils.logi("SplashActivity-->onSuccess", result);
+                mResult = result;
             }
 
             @Override
@@ -85,7 +87,10 @@ public class SplashActivity extends BaseActivity {
         if (guidedVersionCode != versionCode) {
             mIntent.setClass(mContext, GuideActivity.class);//新版本，跳转到引导页面
         } else {
-            // TODO: 2016/8/1 登录页面
+//            if ("null".equals(mCookie) || "".equals(mCookie)){//当cookies为空，跳转到登录界面
+//                Toast.makeText(mContext, R.string.need_login, Toast.LENGTH_SHORT).show();
+//                mIntent.setClass(mContext, LoginActivity.class);//新版本，跳转到引导页面
+//            }
             int lockType = MySPUtils.getInt(mContext, "lockType");
             if (lockType != 0) {
                 mIntent.setClass(mContext, LockActivity.class);//设置了程序锁，跳转到解锁页面
@@ -110,6 +115,7 @@ public class SplashActivity extends BaseActivity {
         if (adBitmap != null && !adBitmap.isRecycled()){
             adBitmap.recycle();
             adBitmap = null;
+            System.gc();
         }
     }
 }
