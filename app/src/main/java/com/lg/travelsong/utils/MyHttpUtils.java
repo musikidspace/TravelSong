@@ -1,11 +1,14 @@
 package com.lg.travelsong.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
+import com.lg.travelsong.activity.LoginActivity;
 import com.lg.travelsong.global.AppProperty;
 import com.lg.travelsong.manager.ThreadPool;
 
@@ -15,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * http工具类
@@ -32,7 +34,7 @@ public class MyHttpUtils {
     private MyHandler mHandler;
     private int mConnectTimeout = 5 * 1000;
     private int mReadTimeout = 5 * 1000;
-    private Context mContext;
+    private static Context mContext;
 
     public MyHttpUtils(Context context) {
         mContext = context;
@@ -68,19 +70,28 @@ public class MyHttpUtils {
                 result = msg.getData().getString("result");
                 MyLogUtils.logi("MyHttpUtils-->result", result);
             }
-            switch (msg.what) {
-                case MSG_HTTPGET_SUCCESS:
-                    callBack.onSuccess(result);
-                    break;
-                case MSG_HTTPGET_FAILURE:
-                    callBack.onFailure(result);
-                    break;
-                case MSG_HTTPPOST_SUCCESS:
-                    callBack.onSuccess(result);
-                    break;
-                case MSG_HTTPPOST_FAILURE:
-                    callBack.onFailure(result);
-                    break;
+            if (result.contains("cookie is null")){
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                mContext.startActivity(intent);
+            } else if (result.contains("the two cookies are different")){
+                Toast.makeText(mContext, "账号存在风险，请重新登录！", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                mContext.startActivity(intent);
+            } else {
+                switch (msg.what) {
+                    case MSG_HTTPGET_SUCCESS:
+                        callBack.onSuccess(result);
+                        break;
+                    case MSG_HTTPGET_FAILURE:
+                        callBack.onFailure(result);
+                        break;
+                    case MSG_HTTPPOST_SUCCESS:
+                        callBack.onSuccess(result);
+                        break;
+                    case MSG_HTTPPOST_FAILURE:
+                        callBack.onFailure(result);
+                        break;
+                }
             }
         }
     }
@@ -112,7 +123,7 @@ public class MyHttpUtils {
                     // 设置通用的请求属性
                     conn.setRequestProperty("User-Agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
 //                    conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
-                    conn.setRequestProperty("Cookie", URLEncoder.encode("name=我是Cookie","UTF-8"));
+                    conn.setRequestProperty("Cookie", "usergithubcookietes");
                     // 建立实际的连接
                     conn.connect();
                     // 判断响应状态

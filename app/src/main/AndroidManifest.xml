@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".activity.GuideActivity"/>
         <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
     </application>
 
 </manifest>

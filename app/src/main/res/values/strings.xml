@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">行歌</string>
-    <string name="need_login">您需要登录。</string>
+    <string name="account_unnormal">账号存在风险，请重新登录！</string>
 </resources>

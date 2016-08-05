@@ -9,9 +9,7 @@ import android.widget.ImageView;
 
 import com.lg.travelsong.R;
 import com.lg.travelsong.global.AppProperty;
-import com.lg.travelsong.global.HttpConfig;
 import com.lg.travelsong.utils.MyBitmapUtils;
-import com.lg.travelsong.utils.MyHttpUtils;
 import com.lg.travelsong.utils.MyLogUtils;
 import com.lg.travelsong.utils.MySPUtils;
 
@@ -45,20 +43,6 @@ public class SplashActivity extends BaseActivity {
 
     //初始化数据
     private void initData() {
-        new MyHttpUtils(mContext).httpGet(HttpConfig.HOSTURL + HttpConfig.CONFIG, null, new MyHttpUtils.HttpCallBack() {
-
-            @Override
-            public void onSuccess(String result) {
-                MyLogUtils.logi("SplashActivity-->onSuccess", result);
-                mResult = result;
-            }
-
-            @Override
-            public void onFailure(String failMsg) {
-                MyLogUtils.logi("SplashActivity-->onFailure", failMsg);
-            }
-        });
-
         mMyBitmapUtils = MyBitmapUtils.getInstance(mContext);
         String name = "ad.png";
         boolean exist = false;
@@ -81,24 +65,19 @@ public class SplashActivity extends BaseActivity {
             }
         }
 
-        //检查版本名是否存在了已读引导的SP
-        int versionCode = AppProperty.versionCode;
-        int guidedVersionCode = MySPUtils.getInt(mContext, "guidedVersionCode");
-        if (guidedVersionCode != versionCode) {
-            mIntent.setClass(mContext, GuideActivity.class);//新版本，跳转到引导页面
+        //是否设置了解锁页
+        int lockType = MySPUtils.getInt(mContext, "lockType");
+        if (MySPUtils.getInt(mContext, "guidedVersionCode") != AppProperty.versionCode) {
+            mIntent.setClass(mContext, GuideActivity.class);//检查版本名是否存在了已读引导的SP.新版本，跳转到引导页面
+        } else if ("".equals(MySPUtils.getString(mContext, "cookie"))) {
+            mIntent.setClass(mContext, LoginActivity.class);//cookie为空，跳转到登录界面
+        } else if (lockType != 0) {
+            mIntent.setClass(mContext, LockActivity.class);//设置了程序锁，跳转到解锁页面
+            mIntent.putExtra("lockType", lockType);
         } else {
-//            if ("null".equals(mCookie) || "".equals(mCookie)){//当cookies为空，跳转到登录界面
-//                Toast.makeText(mContext, R.string.need_login, Toast.LENGTH_SHORT).show();
-//                mIntent.setClass(mContext, LoginActivity.class);//新版本，跳转到引导页面
-//            }
-            int lockType = MySPUtils.getInt(mContext, "lockType");
-            if (lockType != 0) {
-                mIntent.setClass(mContext, LockActivity.class);//设置了程序锁，跳转到解锁页面
-                mIntent.putExtra("lockType", lockType);
-            } else {
-                mIntent.setClass(mContext, MainActivity.class);//跳转到主页面
-            }
+            mIntent.setClass(mContext, MainActivity.class);//跳转到主页面
         }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -112,7 +91,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (adBitmap != null && !adBitmap.isRecycled()){
+        if (adBitmap != null && !adBitmap.isRecycled()) {
             adBitmap.recycle();
             adBitmap = null;
             System.gc();
