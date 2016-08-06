@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.lg.travelsong.R;
 import com.lg.travelsong.activity.LoginActivity;
 import com.lg.travelsong.global.AppProperty;
 import com.lg.travelsong.manager.ThreadPool;
@@ -70,11 +71,11 @@ public class MyHttpUtils {
                 result = msg.getData().getString("result");
                 MyLogUtils.logi("MyHttpUtils-->result", result);
             }
-            if (result.contains("cookie is null")){
+            if (result != null && result.contains("cookie is null")) {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);
-            } else if (result.contains("the two cookies are different")){
-                Toast.makeText(mContext, "账号存在风险，请重新登录！", Toast.LENGTH_SHORT).show();
+            } else if (result != null && result.contains("the two cookies are different")) {
+                Toast.makeText(mContext, R.string.account_unnormal, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);
             } else {
@@ -184,7 +185,7 @@ public class MyHttpUtils {
                     conn.setReadTimeout(mReadTimeout);
                     // 设置通用的请求属性
                     //设置contentType为application/x-www-form-urlencoded，
-                    // servlet就可以直接使用request.getParameter("username");直接得到所需要信息
+                    // servlet就可以直接使用request.getParameter("");直接得到所需要信息
                     conn.setRequestProperty("contentType", "application/x-www-form-urlencoded");
                     conn.setRequestProperty("user-agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
                     conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
