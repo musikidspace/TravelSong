@@ -1,15 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clipToPadding="true"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clipToPadding="true"
+             android:fitsSystemWindows="true">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
-        android:text="LoginActivity"
-        android:textSize="25sp"/>
-</LinearLayout>
+        android:background="@color/gray">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <EditText
+            android:id="@+id/et_account"
+            style="@style/Style_EditText_Login"
+            android:layout_below="@id/iv_head"
+            android:background="@drawable/selector_edittext_login"
+            android:hint="@string/account_hint"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/Style_EditText_Login"
+            android:layout_below="@id/et_account"
+            android:background="@drawable/selector_edittext_login"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_password"
+            android:layout_margin="15dp"
+            android:background="@drawable/selector_login_btn"
+            android:focusable="true"
+            android:text="@string/login"
+            android:textColor="@color/gray"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/btn_login"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/register"
+            android:textColor="@color/blue"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/btn_login"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/blue"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_login_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/selector_login_wechat"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/selector_login_sina"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_login_other"
+            android:gravity="center_horizontal"
+            android:text="@string/login_other"/>
+    </RelativeLayout>
+</FrameLayout>
