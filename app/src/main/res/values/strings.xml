@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">行歌</string>
     <string name="account_unnormal">账号存在风险，请重新登录！</string>
+    <string name="login">登录</string>
+    <string name="search">搜索</string>
+    <string name="add">增加</string>
+
 </resources>
