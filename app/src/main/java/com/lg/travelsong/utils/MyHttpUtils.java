@@ -35,10 +35,11 @@ public class MyHttpUtils {
     private MyHandler mHandler;
     private int mConnectTimeout = 5 * 1000;
     private int mReadTimeout = 5 * 1000;
-    private static Context mContext;
+    private static Context sContext;
+    private static boolean sGetCookies;
 
     public MyHttpUtils(Context context) {
-        mContext = context;
+        sContext = context;
         mHandler = new MyHandler();
     }
 
@@ -50,6 +51,30 @@ public class MyHttpUtils {
      */
     public MyHttpUtils(Context context, int connectTimeout, int readTimeout) {
         this(context);
+        mConnectTimeout = connectTimeout;
+        mReadTimeout = readTimeout;
+    }
+
+    /**
+     * 设置开启解析cookies的方法
+     *
+     * @param getCookies 是否从返回的输入流解析cookies
+     */
+    public MyHttpUtils(Context contex, boolean getCookies) {
+        this(contex);
+        sGetCookies = getCookies;
+    }
+
+    /**
+     * 设置开启解析cookies,并设置超时的方法
+     *
+     * @param connectTimeout 连接超时
+     * @param readTimeout    读取超时
+     * @param getCookies     是否从返回的输入流解析cookies
+     */
+    public MyHttpUtils(Context contex, boolean getCookies, int connectTimeout, int readTimeout) {
+        this(contex);
+        sGetCookies = getCookies;
         mConnectTimeout = connectTimeout;
         mReadTimeout = readTimeout;
     }
@@ -69,15 +94,19 @@ public class MyHttpUtils {
             if (msg.obj instanceof HttpCallBack) {
                 callBack = (HttpCallBack) msg.obj;
                 result = msg.getData().getString("result");
-                MyLogUtils.logi("MyHttpUtils-->result", result);
+                if (sGetCookies) {
+                    String cookies = msg.getData().getString("cookie");
+                    result = result + ";getCookieWhenNeed:" + cookies;
+                }
+                MyLogUtils.logCatch("MyHttpUtils-->result", result);
             }
             if (result != null && result.contains("cookie is null")) {
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                mContext.startActivity(intent);
+                Intent intent = new Intent(sContext, LoginActivity.class);
+                sContext.startActivity(intent);
             } else if (result != null && result.contains("the two cookies are different")) {
-                Toast.makeText(mContext, R.string.account_unnormal, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                mContext.startActivity(intent);
+                Toast.makeText(sContext, R.string.account_unnormal, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(sContext, LoginActivity.class);
+                sContext.startActivity(intent);
             } else {
                 switch (msg.what) {
                     case MSG_HTTPGET_SUCCESS:
@@ -123,8 +152,7 @@ public class MyHttpUtils {
                     conn.setReadTimeout(mReadTimeout);
                     // 设置通用的请求属性
                     conn.setRequestProperty("User-Agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
-//                    conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
-                    conn.setRequestProperty("Cookie", "usergithubcookietes");
+                    conn.setRequestProperty("Cookie", MySPUtils.getString(sContext, "cookie"));
                     // 建立实际的连接
                     conn.connect();
                     // 判断响应状态
@@ -139,6 +167,9 @@ public class MyHttpUtils {
                         }
                         mMessage.what = MSG_HTTPGET_SUCCESS;
                         bundle.putString("result", sb.toString());
+                        if (sGetCookies) {
+                            bundle.putString("cookie", conn.getHeaderField("Set-Cookie"));
+                        }
                         MyCloseUtils.doClose(is, isr, br);
                     } else {
                         mMessage.what = MSG_HTTPGET_FAILURE;
@@ -186,9 +217,9 @@ public class MyHttpUtils {
                     // 设置通用的请求属性
                     //设置contentType为application/x-www-form-urlencoded，
                     // servlet就可以直接使用request.getParameter("");直接得到所需要信息
-                    conn.setRequestProperty("contentType", "application/x-www-form-urlencoded");
-                    conn.setRequestProperty("user-agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
-                    conn.setRequestProperty("cookie", MySPUtils.getString(mContext, "cookie"));
+                    conn.setRequestProperty("ContentType", "application/x-www-form-urlencoded");
+                    conn.setRequestProperty("User-Agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
+                    conn.setRequestProperty("Cookie", MySPUtils.getString(sContext, "cookie"));
                     // 发送POST请求必须设置允许输出
                     conn.setDoOutput(true);
                     // 发送POST请求必须设置允许输入
@@ -212,6 +243,9 @@ public class MyHttpUtils {
                         }
                         mMessage.what = MSG_HTTPPOST_SUCCESS;
                         bundle.putString("result", sb.toString());
+                        if (sGetCookies) {
+                            bundle.putString("cookie", conn.getHeaderField("Set-Cookie"));
+                        }
                         MyCloseUtils.doClose(is, isr, br);
                     } else {
                         mMessage.what = MSG_HTTPPOST_FAILURE;

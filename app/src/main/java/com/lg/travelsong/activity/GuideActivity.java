@@ -139,7 +139,7 @@ public class GuideActivity extends BaseActivity implements View.OnTouchListener{
     private void skipTo(){
         int lockType = MySPUtils.getInt(mContext, "lockType");
         Intent mIntent = new Intent();
-        if ("".equals(MySPUtils.getString(mContext, "cookie"))) {
+        if ("".equals(MySPUtils.getString(mContext, "cookie")) || "null".equals(MySPUtils.getString(mContext, "cookie"))) {
             mIntent.setClass(mContext, LoginActivity.class);//cookie为空，跳转到登录界面
         } else if (lockType != 0) {
             mIntent.setClass(mContext, LockActivity.class);//设置了程序锁，跳转到解锁页面

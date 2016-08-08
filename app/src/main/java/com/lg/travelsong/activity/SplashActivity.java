@@ -69,7 +69,7 @@ public class SplashActivity extends BaseActivity {
         int lockType = MySPUtils.getInt(mContext, "lockType");
         if (MySPUtils.getInt(mContext, "guidedVersionCode") != AppProperty.versionCode) {
             mIntent.setClass(mContext, GuideActivity.class);//检查版本名是否存在了已读引导的SP.新版本，跳转到引导页面
-        } else if ("".equals(MySPUtils.getString(mContext, "cookie"))) {
+        } else if ("".equals(MySPUtils.getString(mContext, "cookie")) || "null".equals(MySPUtils.getString(mContext, "cookie"))) {
             mIntent.setClass(mContext, LoginActivity.class);//cookie为空，跳转到登录界面
         } else if (lockType != 0) {
             mIntent.setClass(mContext, LockActivity.class);//设置了程序锁，跳转到解锁页面

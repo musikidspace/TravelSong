@@ -10,4 +10,6 @@ public class HttpConfig {
     public static final String SYSTIME = "systime";
 
     public static final String CONFIG = "config";
+
+    public static final String LOGIN = "login";
 }
