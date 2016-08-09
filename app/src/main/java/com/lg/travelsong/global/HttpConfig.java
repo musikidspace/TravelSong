@@ -12,4 +12,6 @@ public class HttpConfig {
     public static final String CONFIG = "config";
 
     public static final String LOGIN = "login";
+
+    public static final String REGISTER = "register";
 }

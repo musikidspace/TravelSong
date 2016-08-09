@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import com.lg.travelsong.R;
 import com.lg.travelsong.global.AppProperty;
 import com.lg.travelsong.utils.MyBitmapUtils;
-import com.lg.travelsong.utils.MyCommonUtils;
+import com.lg.travelsong.utils.MyDisplayUtils;
 import com.lg.travelsong.utils.MySPUtils;
 
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ public class GuideActivity extends BaseActivity implements View.OnTouchListener{
         MyBitmapUtils myBitmapUtils = MyBitmapUtils.getInstance(mContext);
         Bitmap bitmap;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                MyCommonUtils.dp2px(mContext, 8), MyCommonUtils.dp2px(mContext, 8));
-        int margin = MyCommonUtils.dp2px(mContext, 2);
+                MyDisplayUtils.dp2px(mContext, 8), MyDisplayUtils.dp2px(mContext, 8));
+        int margin = MyDisplayUtils.dp2px(mContext, 2);
         params.setMargins(margin, 0, margin, 0);
         View point;
         for (int i = 0; i < mGuideImgs.length; i++) {
@@ -118,7 +118,7 @@ public class GuideActivity extends BaseActivity implements View.OnTouchListener{
                     downX = motionEvent.getX();//按下时的x值
                     break;
                 case MotionEvent.ACTION_UP ://当向上下拉了才会触发这个
-                    if (downX - motionEvent.getX()> MyCommonUtils.getScreenWidth(mContext) / 4){
+                    if (downX - motionEvent.getX()> MyDisplayUtils.getScreenWidth(mContext) / 4){
                         skipTo();
                     }
                     break;

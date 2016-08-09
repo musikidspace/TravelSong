@@ -1,0 +1,37 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clipToPadding="true"
+             android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray">
+
+        <EditText
+            android:id="@+id/et_user"
+            style="@style/Style_EditText_Login"
+            android:background="@drawable/selector_edittext_login"
+            android:hint="@string/account_user_hint"/>
+
+        <EditText
+            android:id="@+id/et_account"
+            style="@style/Style_EditText_Login"
+            android:layout_below="@id/et_user"
+            android:background="@drawable/selector_edittext_login"
+            android:hint="@string/account_register_hint"/>
+
+        <Button
+            android:id="@+id/btn_find_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_account"
+            android:layout_margin="15dp"
+            android:background="@drawable/selector_login_btn"
+            android:focusable="true"
+            android:text="@string/find_password"
+            android:textColor="@color/gray"/>
+
+    </RelativeLayout>
+</FrameLayout>
