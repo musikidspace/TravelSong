@@ -21,4 +21,8 @@
     <string name="register_fail">注册失败，请重试</string>
     <string name="connect_wrong">连接服务器失败，请稍后再试</string>
     <string name="waiting">请稍候…</string>
+    <string name="map">行</string>
+    <string name="chat">聊</string>
+    <string name="moment">歌</string>
+    <string name="me">窝</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.lg.travelsong.activity;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.WindowManager;
 
 /**
@@ -10,7 +10,7 @@ import android.view.WindowManager;
  *
  * @author LuoYi on 2016/7/29
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

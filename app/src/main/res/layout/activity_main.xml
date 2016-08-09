@@ -2,14 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/colorPrimaryDark"
               android:clipToPadding="true"
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/fl_tabcontent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MainActivity"
-        android:textSize="25sp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/gray"/>
+
+    <android.support.v4.app.FragmentTabHost
+        android:id="@+id/fth_tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
