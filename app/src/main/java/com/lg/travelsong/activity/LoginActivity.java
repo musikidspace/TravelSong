@@ -170,12 +170,12 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         userpassword = et_password.getText().toString();
         if (usercode.equals("")) {
             et_account.setError(Html
-                    .fromHtml("<font color='#83CFFC'>账号不能为空</color>"));
+                    .fromHtml("<font color='#7FA2C2'>账号不能为空</color>"));
             return false;
         }
         if (userpassword.equals("")) {
             et_password.setError(Html
-                    .fromHtml("<font color='#83CFFC'>密码不能为空</color>"));
+                    .fromHtml("<font color='#7FA2C2'>密码不能为空</color>"));
             return false;
         }
         mCustomDialog.show();
@@ -214,7 +214,11 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
 
             @Override
             public void onFailure(String failMsg) {
-                Toast.makeText(mContext, R.string.connect_wrong, Toast.LENGTH_SHORT).show();
+                if (failMsg.contains("not availavle")){
+                    Toast.makeText(mContext, R.string.network_not_available, Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(mContext, R.string.connect_wrong, Toast.LENGTH_SHORT).show();
+                }
                 MyLogUtils.logi("LoginActivity-->onFailure", failMsg);
                 mCustomDialog.dismiss();
             }

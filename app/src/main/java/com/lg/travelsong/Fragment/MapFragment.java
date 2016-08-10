@@ -1,4 +1,4 @@
-package com.lg.travelsong.Fragment;
+package com.lg.travelsong.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

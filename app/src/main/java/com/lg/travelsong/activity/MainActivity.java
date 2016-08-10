@@ -40,35 +40,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener{
         fth_tabhost = (FragmentTabHost) findViewById(R.id.fth_tabhost);
 
         //使FragementTabHost和FrameLayout关联
-        fth_tabhost.setup(mContext, getSupportFragmentManager(), R.id.fl_tabcontent);
+        fth_tabhost.setup(mContext, getSupportFragmentManager(), R.id.sv_tabcontent);
         //不显示分隔线
         fth_tabhost.getTabWidget().setShowDividers(0);
         //添加对应Fragment
         initTabs();
-
-        /*TabSpec tsMap = fth_tabhost.newTabSpec("map");
-        tsMap.setIndicator("行");
-        Bundle bundleMap = new Bundle();
-        bundleMap.putString("host", "行");
-        fth_tabhost.addTab(tsMap, MapFragment.class, bundleMap);
-
-        TabSpec tsChat = fth_tabhost.newTabSpec("chat");
-        tsChat.setIndicator("聊");
-        Bundle bundleChat = new Bundle();
-        bundleChat.putString("host", "聊");
-        fth_tabhost.addTab(tsChat, MapFragment.class, bundleChat);
-
-        TabSpec tsMoment = fth_tabhost.newTabSpec("moment");
-        tsMoment.setIndicator("歌");
-        Bundle bundleMoment = new Bundle();
-        bundleMoment.putString("host", "歌");
-        fth_tabhost.addTab(tsMoment, MapFragment.class, bundleMoment);
-
-        TabSpec tsMe = fth_tabhost.newTabSpec("me");
-        tsMe.setIndicator("窝");
-        Bundle bundleMe = new Bundle();
-        bundleMe.putString("host", "窝");
-        fth_tabhost.addTab(tsMe, MapFragment.class, bundleMe);*/
     }
 
     /**

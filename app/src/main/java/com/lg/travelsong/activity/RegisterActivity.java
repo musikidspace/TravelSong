@@ -139,22 +139,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         userpassword_again = et_password_again.getText().toString();
         if (user.equals("")) {
             et_user.setError(Html
-                    .fromHtml("<font color='#83CFFC'>用户名不能为空</color>"));
+                    .fromHtml("<font color='#7FA2C2'>用户名不能为空</color>"));
             return false;
         }
         if ((!MyStringUtils.validPhone(usercode)) && (!MyStringUtils.validEmail(usercode))) {
             et_account.setError(Html
-                    .fromHtml("<font color='#83CFFC'>请输入正确的手机号或邮箱</color>"));
+                    .fromHtml("<font color='#7FA2C2'>请输入正确的手机号或邮箱</color>"));
             return false;
         }
         if (userpassword.length() < 6) {
             et_password.setError(Html
-                    .fromHtml("<font color='#83CFFC'>密码不能小于6位</color>"));
+                    .fromHtml("<font color='#7FA2C2'>密码不能小于6位</color>"));
             return false;
         }
         if (!userpassword.equals(userpassword_again)) {
             et_password_again.setError(Html
-                    .fromHtml("<font color='#83CFFC'>两次密码不一致</color>"));
+                    .fromHtml("<font color='#7FA2C2'>两次密码不一致</color>"));
             return false;
         }
         mCustomDialog.show();

@@ -134,6 +134,10 @@ public class MyHttpUtils {
      * @param callBack 回调方法
      */
     public void httpGet(final String url, final String param, final HttpCallBack callBack) {
+        if (MyCommonUtils.networkType(sContext) == 0){
+            callBack.onFailure("network is not availavle");
+            return;
+        }
         ThreadPool.getInstance().execute(new Runnable() {
 
             @Override
@@ -198,6 +202,10 @@ public class MyHttpUtils {
      * @param callBack 回调方法
      */
     public void httpPost(final String url, final String param, final HttpCallBack callBack) {
+        if (MyCommonUtils.networkType(sContext) == 0){
+            callBack.onFailure("network is not availavle");
+            return;
+        }
         ThreadPool.getInstance().execute(new Runnable() {
 
             @Override

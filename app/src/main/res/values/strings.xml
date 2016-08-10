@@ -19,6 +19,7 @@
     <string name="register_samephone">注册失败，已存在此手机号</string>
     <string name="register_sameemial">注册失败，已存在此邮箱</string>
     <string name="register_fail">注册失败，请重试</string>
+    <string name="network_not_available">网络连接不可用</string>
     <string name="connect_wrong">连接服务器失败，请稍后再试</string>
     <string name="waiting">请稍候…</string>
     <string name="map">行</string>
