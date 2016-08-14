@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">行歌</string>
     <string name="digits">.-_0123456789@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="digits_user">-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="account_unnormal">账号存在风险，请重新登录！</string>
     <string name="login">登录</string>
     <string name="search">搜索</string>

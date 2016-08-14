@@ -167,7 +167,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void register() {
         // TODO: 2016/8/9 userpassword jni加密后提交
         String param = "user=" + user + "&usercode=" + usercode + "&userpassword=" + userpassword;
-        new MyHttpUtils(mContext, true).httpPost(HttpConfig.HOSTURL + HttpConfig.REGISTER, param, new MyHttpUtils.HttpCallBack() {
+        new MyHttpUtils(mContext, true).httpSend(HttpConfig.HOSTURL + HttpConfig.REGISTER, MyHttpUtils.POST, param, new MyHttpUtils.HttpCallBack() {
 
             @Override
             public void onSuccess(String result) {
@@ -181,11 +181,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         startActivity(intent);
                         finish();
                         MySPUtils.putString(mContext, "cookie", results[1].substring(7));
-                    } else if (jo.getJSONObject("data").getString("msg").contains("same usercode")) {
+                    } else if (jo.getString("msg").contains("same usercode")) {
                         Toast.makeText(mContext, R.string.register_samecode, Toast.LENGTH_SHORT).show();
-                    } else if (jo.getJSONObject("data").getString("msg").contains("same userphone")) {
+                    } else if (jo.getString("msg").contains("same userphone")) {
                         Toast.makeText(mContext, R.string.register_samephone, Toast.LENGTH_SHORT).show();
-                    } else if (jo.getJSONObject("data").getString("msg").contains("same useremail")) {
+                    } else if (jo.getString("msg").contains("same useremail")) {
                         Toast.makeText(mContext, R.string.register_sameemial, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, R.string.register_fail, Toast.LENGTH_SHORT).show();

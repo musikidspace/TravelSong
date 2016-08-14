@@ -13,6 +13,7 @@
             android:id="@+id/et_user"
             style="@style/Style_EditText_Login"
             android:background="@drawable/selector_edittext_login"
+            android:digits="@string/digits_user"
             android:hint="@string/account_user_hint"/>
 
         <EditText

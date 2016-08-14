@@ -188,7 +188,7 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
     private void login() {
         // TODO: 2016/8/9 userpassword jni加密后提交
         String param = "usercode=" + usercode + "&userpassword=" + userpassword;
-        new MyHttpUtils(mContext, true).httpPost(HttpConfig.HOSTURL + HttpConfig.LOGIN, param, new MyHttpUtils.HttpCallBack() {
+        new MyHttpUtils(mContext, true).httpSend(HttpConfig.HOSTURL + HttpConfig.LOGIN, MyHttpUtils.GET, param, new MyHttpUtils.HttpCallBack() {
 
             @Override
             public void onSuccess(String result) {

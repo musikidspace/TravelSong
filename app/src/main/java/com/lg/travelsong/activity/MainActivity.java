@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener{
             View viewIndicator = View.inflate(mContext, R.layout.tab_indicator, null);
             TextView tv_tab_title = (TextView) viewIndicator.findViewById(R.id.tv_tab_title);
             Drawable drawable = this.getResources().getDrawable(tabs[i].resIcon);
-            drawable.setBounds(0, 0, MyDisplayUtils.dp2px(mContext, 35), MyDisplayUtils.dp2px(mContext, 35));
+            drawable.setBounds(0, 0, MyDisplayUtils.dp2px(mContext, 32), MyDisplayUtils.dp2px(mContext, 32));
             tv_tab_title.setCompoundDrawables(null, drawable, null, null);
             tv_tab_title.setText(getString(tabs[i].resName));
             // 设置自定义选项卡

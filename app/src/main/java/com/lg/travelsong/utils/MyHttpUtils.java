@@ -27,10 +27,13 @@ import java.net.URL;
  */
 public class MyHttpUtils {
 
-    private static final int MSG_HTTPGET_SUCCESS = 100;
-    private static final int MSG_HTTPGET_FAILURE = 101;
-    private static final int MSG_HTTPPOST_SUCCESS = 102;
-    private static final int MSG_HTTPPOST_FAILURE = 103;
+    public static final String GET = "GET";
+    public static final String POST = "POST";
+    public static final String PUT = "PUT";
+    public static final String DELETE = "DELETE";
+
+    private static final int MSG_HTTP_SUCCESS = 100;
+    private static final int MSG_HTTP_FAILURE = 101;
 
     private MyHandler mHandler;
     private int mConnectTimeout = 5 * 1000;
@@ -109,16 +112,10 @@ public class MyHttpUtils {
                 sContext.startActivity(intent);
             } else {
                 switch (msg.what) {
-                    case MSG_HTTPGET_SUCCESS:
+                    case MSG_HTTP_SUCCESS:
                         callBack.onSuccess(result);
                         break;
-                    case MSG_HTTPGET_FAILURE:
-                        callBack.onFailure(result);
-                        break;
-                    case MSG_HTTPPOST_SUCCESS:
-                        callBack.onSuccess(result);
-                        break;
-                    case MSG_HTTPPOST_FAILURE:
+                    case MSG_HTTP_FAILURE:
                         callBack.onFailure(result);
                         break;
                 }
@@ -134,7 +131,7 @@ public class MyHttpUtils {
      * @param callBack 回调方法
      */
     public void httpGet(final String url, final String param, final HttpCallBack callBack) {
-        if (MyCommonUtils.networkType(sContext) == 0){
+        if (MyCommonUtils.networkType(sContext) == 0) {
             callBack.onFailure("network is not availavle");
             return;
         }
@@ -169,18 +166,18 @@ public class MyHttpUtils {
                         while ((line = br.readLine()) != null) {
                             sb.append(line);
                         }
-                        mMessage.what = MSG_HTTPGET_SUCCESS;
+                        mMessage.what = MSG_HTTP_SUCCESS;
                         bundle.putString("result", sb.toString());
                         if (sGetCookies) {
                             bundle.putString("cookie", conn.getHeaderField("Set-Cookie"));
                         }
                         MyCloseUtils.doClose(is, isr, br);
                     } else {
-                        mMessage.what = MSG_HTTPGET_FAILURE;
+                        mMessage.what = MSG_HTTP_FAILURE;
                         bundle.putString("result", "Http response state wrong : " + conn.getResponseCode());
                     }
                 } catch (Exception e) {
-                    mMessage.what = MSG_HTTPGET_FAILURE;
+                    mMessage.what = MSG_HTTP_FAILURE;
                     bundle.putString("result", e.getMessage());
                 } finally {
                     if (conn != null) {
@@ -202,7 +199,7 @@ public class MyHttpUtils {
      * @param callBack 回调方法
      */
     public void httpPost(final String url, final String param, final HttpCallBack callBack) {
-        if (MyCommonUtils.networkType(sContext) == 0){
+        if (MyCommonUtils.networkType(sContext) == 0) {
             callBack.onFailure("network is not availavle");
             return;
         }
@@ -249,18 +246,99 @@ public class MyHttpUtils {
                         while ((line = br.readLine()) != null) {
                             sb.append(line);
                         }
-                        mMessage.what = MSG_HTTPPOST_SUCCESS;
+                        mMessage.what = MSG_HTTP_SUCCESS;
                         bundle.putString("result", sb.toString());
                         if (sGetCookies) {
                             bundle.putString("cookie", conn.getHeaderField("Set-Cookie"));
                         }
                         MyCloseUtils.doClose(is, isr, br);
                     } else {
-                        mMessage.what = MSG_HTTPPOST_FAILURE;
+                        mMessage.what = MSG_HTTP_FAILURE;
                         bundle.putString("result", "Http response state wrong : " + conn.getResponseCode());
                     }
                 } catch (Exception e) {
-                    mMessage.what = MSG_HTTPGET_FAILURE;
+                    mMessage.what = MSG_HTTP_FAILURE;
+                    bundle.putString("result", e.getMessage());
+                } finally {
+                    if (conn != null) {
+                        conn.disconnect();
+                    }
+                    mMessage.obj = callBack;
+                    mMessage.setData(bundle);
+                    mHandler.sendMessage(mMessage);
+                }
+            }
+        });
+    }
+
+    /**
+     * 通过传递的方式请求网络。服务的REST对应解析
+     *
+     * @param url      请求地址
+     * @param method   请求方式
+     * @param param    参数，以name1=value1&name2=value2形式传入，无则传null
+     * @param callBack 回调方法
+     */
+    public void httpSend(final String url, final String method, final String param, final HttpCallBack callBack) {
+        if (MyCommonUtils.networkType(sContext) == 0) {
+            callBack.onFailure("network is not availavle");
+            return;
+        }
+        ThreadPool.getInstance().execute(new Runnable() {
+
+            @Override
+            public void run() {
+                String noNullParam = param == null ? "" : param;
+                Message mMessage = mHandler.obtainMessage();
+                Bundle bundle = new Bundle();
+                HttpURLConnection conn = null;
+                StringBuffer sb;
+                try {
+                    // 打开和URL之间的连接
+                    conn = (HttpURLConnection) new URL(url).openConnection();
+                    conn.setRequestMethod(method);
+                    // 设置超时时间
+                    conn.setConnectTimeout(mConnectTimeout);
+                    conn.setReadTimeout(mReadTimeout);
+                    // 设置通用的请求属性
+                    //设置contentType为application/x-www-form-urlencoded，
+                    // servlet就可以直接使用request.getParameter("");直接得到所需要信息
+                    conn.setRequestProperty("ContentType", "application/x-www-form-urlencoded");
+                    conn.setRequestProperty("User-Agent", Build.MODEL + ";" + Build.VERSION.RELEASE + ";" + AppProperty.versionCode);
+                    conn.setRequestProperty("Cookie", MySPUtils.getString(sContext, "cookie"));
+                    // 发送POST请求必须设置允许输出
+                    conn.setDoOutput(true);
+                    // 发送POST请求必须设置允许输入
+                    conn.setDoInput(true);
+                    // 建立实际的连接
+                    conn.connect();
+                    // 获取输出流
+                    OutputStream os = conn.getOutputStream();
+                    // 写入参数
+                    os.write(noNullParam.getBytes());
+                    os.flush();
+                    // 判断响应状态
+                    if (conn.getResponseCode() == 200) {
+                        InputStream is = conn.getInputStream();
+                        InputStreamReader isr = new InputStreamReader(is);
+                        BufferedReader br = new BufferedReader(isr);
+                        String line;
+                        sb = new StringBuffer();
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        mMessage.what = MSG_HTTP_SUCCESS;
+                        bundle.putString("result", sb.toString());
+                        if (sGetCookies) {
+                            bundle.putString("cookie", conn.getHeaderField("Set-Cookie"));
+                        }
+                        MyCloseUtils.doClose(is, isr, br);
+                    } else {
+                        mMessage.what = MSG_HTTP_FAILURE;
+                        bundle.putString("result", "Http response state wrong : " + conn.getResponseCode());
+                    }
+                } catch (Exception e) {
+                    mMessage.what = MSG_HTTP_FAILURE;
                     bundle.putString("result", e.getMessage());
                 } finally {
                     if (conn != null) {
