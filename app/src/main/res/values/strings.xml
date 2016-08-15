@@ -24,7 +24,17 @@
     <string name="connect_wrong">连接服务器失败，请稍后再试</string>
     <string name="waiting">请稍候…</string>
     <string name="map">行</string>
-    <string name="chat">聊</string>
+    <string name="chat">撩</string>
     <string name="moment">歌</string>
     <string name="me">窝</string>
+    <string name="map_title">地图</string>
+    <string name="chat_title">消息</string>
+    <string name="map_network">地图网络错误</string>
+    <string name="map_permission">地图权限错误</string>
+    <string name="map_key">地图app_key验证错误</string>
+    <string name="map_type_nomal">2D平面图</string>
+    <string name="map_type_sallite">卫星图</string>
+    <string name="map_type_none">空白图</string>
+    <string name="map_layer_traffic">交通图</string>
+    <string name="map_layer_heat">热力图</string>
 </resources>

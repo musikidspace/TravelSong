@@ -20,6 +20,10 @@
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
         <!--         ActionBar条目背景选择器 -->
         <item name="android:actionBarItemBackground">@drawable/selector_actionbar_item</item>
+        <!--         弹出菜单的样式 -->
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
+        <!--         更多菜单的按钮样式 , 针对没有菜单按键的设备-->
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButton</item>
     </style>
 
     <style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
@@ -43,6 +47,16 @@
         <item name="android:textSize">@dimen/subtitle_text_size</item>
     </style>
 
+    <style name="PopupMenuStyle" parent="android:Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@color/red</item>
+        <item name="android:dropDownVerticalOffset">1dip</item>
+        <item name="android:dropDownHorizontalOffset">-2dip</item>
+    </style>
+
+    <style name="OverflowButton" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <!--<item name="android:src">@drawable/actionbar_search</item>-->
+    </style>
+
     <style name="Style_EditText_Login">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -57,6 +71,11 @@
     <style name="DialogTheme" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Style_PopupAnim_Right" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
 </resources>

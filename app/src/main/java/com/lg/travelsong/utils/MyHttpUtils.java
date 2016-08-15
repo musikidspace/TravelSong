@@ -284,6 +284,11 @@ public class MyHttpUtils {
             callBack.onFailure("network is not availavle");
             return;
         }
+        //get无法通过本方法发送请求，故调用httpGet方法
+        if(GET.equals(method)){
+            httpGet(url, param, callBack);
+            return;
+        }
         ThreadPool.getInstance().execute(new Runnable() {
 
             @Override
@@ -296,7 +301,7 @@ public class MyHttpUtils {
                 try {
                     // 打开和URL之间的连接
                     conn = (HttpURLConnection) new URL(url).openConnection();
-                    conn.setRequestMethod(method);
+                    conn.setRequestMethod("GET");
                     // 设置超时时间
                     conn.setConnectTimeout(mConnectTimeout);
                     conn.setReadTimeout(mReadTimeout);

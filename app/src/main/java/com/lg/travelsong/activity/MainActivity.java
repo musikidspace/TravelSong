@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
@@ -29,22 +28,23 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener{
         initView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     private void initView(){
         mContext = this;
         fth_tabhost = (FragmentTabHost) findViewById(R.id.fth_tabhost);
 
         //使FragementTabHost和FrameLayout关联
-        fth_tabhost.setup(mContext, getSupportFragmentManager(), R.id.sv_tabcontent);
+        fth_tabhost.setup(mContext, getSupportFragmentManager(), R.id.fl_tabcontent);
         //不显示分隔线
         fth_tabhost.getTabWidget().setShowDividers(0);
         //添加对应Fragment
         initTabs();
+        fth_tabhost.setCurrentTab(1);
     }
 
     /**
