@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="212dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="2dp"
+        android:paddingRight="2dp"
+        android:paddingStart="2dp"
+        android:paddingTop="1dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/red_dark"
+            />
+
+        <RelativeLayout
+            android:id="@+id/re_item1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/red">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:contentDescription="@string/map_type_nomal"
+                android:src="@drawable/actionbar_add"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="63dp"
+                android:layout_marginStart="63dp"
+                android:text="@string/map_type_nomal"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/red_dark"/>
+
+        <RelativeLayout
+            android:id="@+id/re_item2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/red">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:contentDescription="@string/map_type_sallite"
+                android:src="@drawable/actionbar_back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="63dp"
+                android:layout_marginStart="63dp"
+                android:text="@string/map_type_sallite"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/red_dark"/>
+
+        <RelativeLayout
+            android:id="@+id/re_item3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/red">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:contentDescription="@string/map_type_none"
+                android:src="@drawable/actionbar_more"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="63dp"
+                android:layout_marginStart="63dp"
+                android:text="@string/map_type_none"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/red_dark"/>
+
+        <RelativeLayout
+            android:id="@+id/re_item4"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/red">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:contentDescription="@string/map_layer_traffic"
+                android:src="@drawable/actionbar_search"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="63dp"
+                android:layout_marginStart="63dp"
+                android:text="@string/map_layer_traffic"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/red_dark"/>
+
+        <RelativeLayout
+            android:id="@+id/re_item5"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/red">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:contentDescription="@string/map_layer_heat"
+                android:src="@drawable/antionbar_cancel"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="63dp"
+                android:layout_marginStart="63dp"
+                android:text="@string/map_layer_heat"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
