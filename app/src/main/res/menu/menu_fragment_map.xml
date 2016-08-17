@@ -10,53 +10,53 @@
         android:title="@string/search"
         android:visible="true"/>
 
+    <item
+        android:id="@+id/add"
+        android:icon="@drawable/actionbar_add"
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource"
+        android:title="@string/add"
+        android:visible="true"/>
+
     <!--<item-->
-        <!--android:id="@+id/add"-->
+        <!--android:id="@+id/type_nomal"-->
         <!--android:icon="@drawable/actionbar_add"-->
-        <!--android:showAsAction="ifRoom"-->
+        <!--android:showAsAction="never"-->
         <!--tools:ignore="AppCompatResource"-->
-        <!--android:title="@string/add"-->
+        <!--android:title="@string/map_type_nomal"-->
         <!--android:visible="true"/>-->
 
-    <item
-        android:id="@+id/type_nomal"
-        android:icon="@drawable/actionbar_add"
-        android:showAsAction="never"
-        tools:ignore="AppCompatResource"
-        android:title="@string/map_type_nomal"
-        android:visible="true"/>
+    <!--<item-->
+        <!--android:id="@+id/type_sallite"-->
+        <!--android:icon="@drawable/actionbar_add"-->
+        <!--android:showAsAction="never"-->
+        <!--tools:ignore="AppCompatResource"-->
+        <!--android:title="@string/map_type_sallite"-->
+        <!--android:visible="true"/>-->
 
-    <item
-        android:id="@+id/type_sallite"
-        android:icon="@drawable/actionbar_add"
-        android:showAsAction="never"
-        tools:ignore="AppCompatResource"
-        android:title="@string/map_type_sallite"
-        android:visible="true"/>
+    <!--<item-->
+        <!--android:id="@+id/type_none"-->
+        <!--android:icon="@drawable/actionbar_add"-->
+        <!--android:showAsAction="never"-->
+        <!--tools:ignore="AppCompatResource"-->
+        <!--android:title="@string/map_type_none"-->
+        <!--android:visible="true"/>-->
 
-    <item
-        android:id="@+id/type_none"
-        android:icon="@drawable/actionbar_add"
-        android:showAsAction="never"
-        tools:ignore="AppCompatResource"
-        android:title="@string/map_type_none"
-        android:visible="true"/>
+    <!--<item-->
+        <!--android:id="@+id/layer_traffic"-->
+        <!--android:icon="@drawable/actionbar_add"-->
+        <!--android:showAsAction="never"-->
+        <!--tools:ignore="AppCompatResource"-->
+        <!--android:title="@string/map_layer_traffic"-->
+        <!--android:visible="true"/>-->
 
-    <item
-        android:id="@+id/layer_traffic"
-        android:icon="@drawable/actionbar_add"
-        android:showAsAction="never"
-        tools:ignore="AppCompatResource"
-        android:title="@string/map_layer_traffic"
-        android:visible="true"/>
-
-    <item
-        android:id="@+id/layer_heat"
-        android:icon="@drawable/actionbar_add"
-        android:showAsAction="never"
-        tools:ignore="AppCompatResource"
-        android:title="@string/map_layer_heat"
-        android:visible="true"/>
+    <!--<item-->
+        <!--android:id="@+id/layer_heat"-->
+        <!--android:icon="@drawable/actionbar_add"-->
+        <!--android:showAsAction="never"-->
+        <!--tools:ignore="AppCompatResource"-->
+        <!--android:title="@string/map_layer_heat"-->
+        <!--android:visible="true"/>-->
     <!--
 showAsAction属性共有五个值：ifRoom、never、always、withText、collapseActionView，可以混合使用。
 

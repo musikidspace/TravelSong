@@ -3,9 +3,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/view_for_pop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
     <com.baidu.mapapi.map.MapView
         android:id="@+id/mv_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/view_for_pop"
         android:clickable="true"/>
 </RelativeLayout>
