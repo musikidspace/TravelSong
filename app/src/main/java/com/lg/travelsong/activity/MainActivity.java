@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
@@ -15,7 +16,7 @@ import com.lg.travelsong.utils.MyDisplayUtils;
 /**
  * @author LuoYi on 2016/8/1
  */
-public class MainActivity extends BaseActivity implements View.OnTouchListener{
+public class MainActivity extends BaseActivity implements View.OnTouchListener {
 
     private Context mContext;
     private FragmentTabHost fth_tabhost;
@@ -24,17 +25,17 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
+        initData();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-    private void initView(){
+    private void initView() {
         mContext = this;
         fth_tabhost = (FragmentTabHost) findViewById(R.id.fth_tabhost);
 
@@ -47,12 +48,19 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener{
         fth_tabhost.setCurrentTab(1);
     }
 
+    private void initData() {
+//        //创建数据库
+//        MyContextWrapper wrapper = new MyContextWrapper(mContext, AppProperty.dirPath());
+//        MySQLiteOpenHelper mySQLiteOpenHelper = new MySQLiteOpenHelper(wrapper);
+//        mySQLiteOpenHelper.getReadableDatabase();
+    }
+
     /**
      * 添加tab到FragmentTabHost
      */
     private void initTabs() {
         MainTab[] tabs = MainTab.values();
-        for (int i = 0; i < tabs.length; i ++){
+        for (int i = 0; i < tabs.length; i++) {
             TabHost.TabSpec ts = fth_tabhost.newTabSpec(getString(tabs[i].resName));
             // 自定义选项卡
             View viewIndicator = View.inflate(mContext, R.layout.tab_indicator, null);

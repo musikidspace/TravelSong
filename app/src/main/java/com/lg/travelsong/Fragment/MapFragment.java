@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +27,10 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.lg.travelsong.R;
+import com.lg.travelsong.bean.ResIdAndName;
 import com.lg.travelsong.widget.CustomPopupWindow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ import java.util.List;
 public class MapFragment extends Fragment {
     private ActionBar ab;
     private CustomPopupWindow popupWindow;
-//    private String host;
+    //    private String host;
     private View view_for_pop;
     private MapView mv_map;
     private BaiduMap mBaiduMap;
@@ -60,12 +60,6 @@ public class MapFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_fragment_map, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
@@ -83,8 +77,33 @@ public class MapFragment extends Fragment {
         view_for_pop = view.findViewById(R.id.view_for_pop);
         mv_map = (MapView) view.findViewById(R.id.mv_map);
 
+        //【定位】1.初始化LocationClient类
+        mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+
+        //隐藏百度logo
+        View logo = mv_map.getChildAt(1);
+        if (logo != null && (logo instanceof ImageView || logo instanceof ZoomControls)) {
+            logo.setVisibility(View.GONE);
+        }
+        //获取百度地图控制器
+        mBaiduMap = mv_map.getMap();
+    }
+
+    private void initData() {
         //初始化actionbar add按钮弹出框
-        popupWindow = new CustomPopupWindow(getActivity(), R.layout.custompopup, new CustomPopupWindow.OnItemClickListener() {
+        List<ResIdAndName> list = new ArrayList<>();
+        ResIdAndName rn1 = new ResIdAndName(R.drawable.actionbar_add, getText(R.string.map_type_nomal).toString());
+        ResIdAndName rn2 = new ResIdAndName(R.drawable.actionbar_back, getText(R.string.map_type_sallite).toString());
+        ResIdAndName rn3 = new ResIdAndName(R.drawable.actionbar_more, getText(R.string.map_type_none).toString());
+        ResIdAndName rn4 = new ResIdAndName(R.drawable.actionbar_search, getText(R.string.map_layer_traffic).toString());
+        ResIdAndName rn5 = new ResIdAndName(R.drawable.antionbar_cancel, getText(R.string.map_layer_heat).toString());
+        list.add(rn1);
+        list.add(rn2);
+        list.add(rn3);
+        list.add(rn4);
+        list.add(rn5);
+        popupWindow = new CustomPopupWindow(getActivity(), list, new CustomPopupWindow.OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 switch (position) {
@@ -114,21 +133,6 @@ public class MapFragment extends Fragment {
                 }
             }
         });
-
-        //【定位】1.初始化LocationClient类
-        mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener(myListener);    //注册监听函数
-
-        //隐藏百度logo
-        View logo = mv_map.getChildAt(1);
-        if (logo != null && (logo instanceof ImageView || logo instanceof ZoomControls)) {
-            logo.setVisibility(View.GONE);
-        }
-        //获取百度地图控制器
-        mBaiduMap = mv_map.getMap();
-    }
-
-    private void initData() {
         ab.setTitle(R.string.map_title);
         //2.配置定位SDK参数
         initLocation();

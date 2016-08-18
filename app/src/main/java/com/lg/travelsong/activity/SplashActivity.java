@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.lg.travelsong.R;
+import com.lg.travelsong.bean.User;
 import com.lg.travelsong.global.AppProperty;
 import com.lg.travelsong.utils.MyBitmapUtils;
 import com.lg.travelsong.utils.MyLogUtils;
@@ -63,6 +65,14 @@ public class SplashActivity extends BaseActivity {
                 adBitmap = mMyBitmapUtils.readBitMap(R.drawable.login_bg);
                 iv_ad.setImageBitmap(adBitmap);
             }
+        }
+
+        //设置全局的user
+        String userJson = MySPUtils.getString(mContext, "userJson");
+        if (!userJson.equals("")){
+            Gson gson = new Gson();
+            User user = gson.fromJson(userJson, User.class);
+            AppProperty.currentUser = user;
         }
 
         //是否设置了解锁页

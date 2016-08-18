@@ -37,4 +37,8 @@
     <string name="map_type_none">空白图</string>
     <string name="map_layer_traffic">交通图</string>
     <string name="map_layer_heat">热力图</string>
+    <string name="chat_group_chat">发起群聊</string>
+    <string name="chat_add_contacts">添加朋友</string>
+    <string name="chat_scan_qrcode">扫一扫</string>
+    <string name="chat_money">收付款</string>
 </resources>

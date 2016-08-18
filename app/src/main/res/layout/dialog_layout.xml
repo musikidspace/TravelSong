@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/loading_pop"
-    android:gravity="center"
-    android:orientation="horizontal" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/loading_pop"
+              android:gravity="center"
+              android:orientation="horizontal">
 
     <ProgressBar
         android:id="@+id/pb_dialog"
         android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"/>
 
     <TextView
         android:id="@+id/tv_dialog"
@@ -20,6 +20,6 @@
         android:paddingRight="0dp"
         android:paddingStart="12dp"
         android:text="@string/waiting"
-        android:textColor="@color/gray" />
+        android:textColor="@color/gray"/>
 
 </LinearLayout>

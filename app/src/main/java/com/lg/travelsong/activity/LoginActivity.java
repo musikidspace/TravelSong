@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lg.travelsong.R;
+import com.lg.travelsong.bean.User;
+import com.lg.travelsong.global.AppProperty;
 import com.lg.travelsong.global.HttpConfig;
 import com.lg.travelsong.utils.MyDisplayUtils;
 import com.lg.travelsong.utils.MyHttpUtils;
@@ -198,9 +201,16 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
                     JSONObject jo = new JSONObject(results[0]);
                     if (jo.getBoolean("success")) {
                         intent = new Intent(mContext, MainActivity.class);
-                        intent.putExtra("user", jo.getJSONObject("data").toString());
                         startActivity(intent);
                         finish();
+                        //设置全局的user
+                        JSONObject userJO = jo.getJSONObject("data");
+                        if (userJO != null){
+                            Gson gson = new Gson();
+                            User user = gson.fromJson(userJO.toString(), User.class);
+                            AppProperty.currentUser = user;
+                            MySPUtils.putString(mContext, "userJson", userJO.toString());
+                        }
                         MySPUtils.putString(mContext, "cookie", results[1].substring(7));
                     } else {
                         Toast.makeText(mContext, R.string.login_fail, Toast.LENGTH_SHORT).show();
