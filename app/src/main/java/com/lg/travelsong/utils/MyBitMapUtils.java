@@ -86,4 +86,18 @@ public class MyBitmapUtils {
         MyCloseUtils.doClose(is);
         return bm;
     }
+
+    /**
+     * 根据链接读取图片
+     *
+     * @param url 图片地址
+     * @return 返回bitmap
+     */
+    public Bitmap readBitmapFromUrl(String url) {
+//        AssetManager am = mContext.getResources().getAssets();
+//        InputStream is = am.open(name);
+//        Bitmap bm = BitmapFactory.decodeStream(is, null, null);
+//        MyCloseUtils.doClose(is);
+        return null;
+    }
 }

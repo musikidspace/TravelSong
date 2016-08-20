@@ -9,8 +9,10 @@ public class Conversation {
     public String usercode;
     public String nickname;
     public String username;
+    public int unreadcount;
     public int lasttime;
     public String lastmsg;
-    public int hasdelete;
+    public int ctype;
+    public int mute;
     public int istop;
 }

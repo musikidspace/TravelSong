@@ -129,7 +129,7 @@ public class ContactDao {
         Contact contact = null;
         //调用getReadableDatabase方法,来初始化数据库的创建或读取
         SQLiteDatabase db = helper.getReadableDatabase();
-        String sql = "select usercode, nickname, username, userhead from contact where usercode = ?";
+        String sql = "select * from contact where usercode = ?";
         Cursor cursor = db.rawQuery(sql, new String[]{usercode});
         //解析Cursor中的数据
         if (cursor != null && cursor.getCount() > 0) {//判断cursor中是否存在数据
@@ -137,16 +137,42 @@ public class ContactDao {
             while (cursor.moveToNext()) {//条件，游标能否定位到下一行
                 //获取数据
                 contact = new Contact();
-                contact.usercode = cursor.getString(0);
-                contact.nickname = cursor.getString(1);
-                contact.username = cursor.getString(2);
-                contact.userhead = cursor.getString(3);
+                setAll(contact, cursor);
             }
             cursor.close();//关闭结果集
         }
         //关闭数据库对象
         db.close();
         return contact;
+    }
+
+    /**
+     * 查询所有通讯录
+     *
+     * @return 查询到的通讯录list
+     */
+    public List<Contact> queryAll() {
+        List<Contact> list = null;
+        Contact contact;
+        //调用getReadableDatabase方法,来初始化数据库的创建或读取
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String sql = "select * from contact";
+        Cursor cursor = db.rawQuery(sql, null);
+        //解析Cursor中的数据
+        if (cursor != null && cursor.getCount() > 0) {//判断cursor中是否存在数据
+            list = new ArrayList<>();
+            //循环遍历结果集，获取每一行的内容
+            while (cursor.moveToNext()) {//条件，游标能否定位到下一行
+                //获取数据
+                contact = new Contact();
+                setAll(contact, cursor);
+                list.add(contact);
+            }
+            cursor.close();//关闭结果集
+        }
+        //关闭数据库对象
+        db.close();
+        return list;
     }
 
     /**
@@ -157,7 +183,7 @@ public class ContactDao {
      */
     public List<Contact> query(String sql) {
         List<Contact> list = null;
-        Contact contact = null;
+        Contact contact;
         //调用getReadableDatabase方法,来初始化数据库的创建或读取
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
@@ -168,10 +194,7 @@ public class ContactDao {
             while (cursor.moveToNext()) {//条件，游标能否定位到下一行
                 //获取数据
                 contact = new Contact();
-                contact.usercode = cursor.getString(cursor.getColumnIndex("usercode"));
-                contact.nickname = cursor.getString(cursor.getColumnIndex("nickname"));
-                contact.username = cursor.getString(cursor.getColumnIndex("username"));
-                contact.userhead = cursor.getString(cursor.getColumnIndex("userhead"));
+                setAll(contact, cursor);
                 list.add(contact);
             }
             cursor.close();//关闭结果集
@@ -179,6 +202,14 @@ public class ContactDao {
         //关闭数据库对象
         db.close();
         return list;
+    }
+
+    //设置属性
+    private void setAll(Contact contact, Cursor cursor) {
+        contact.usercode = cursor.getString(cursor.getColumnIndex("usercode"));
+        contact.nickname = cursor.getString(cursor.getColumnIndex("nickname"));
+        contact.username = cursor.getString(cursor.getColumnIndex("username"));
+        contact.userhead = cursor.getString(cursor.getColumnIndex("userhead"));
     }
 
 }

@@ -19,11 +19,11 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "create table conversation (csid integer primary key autoincrement, userhead varchar(200)," +
-                " usercode varchar(30), nickname varchar(30), username varchar(30), lasttime integer," +
-                " lastmsg varchar(2000), hasdelete integer default (0), istop integer default (0))";
-        String sql2 = "create table contact (usercode varchar(30), nickname varchar(30)," +
-                " username varchar(30), userhead varchar(200))";
+        String sql = "create table conversation (csid integer primary key autoincrement, userhead varchar(200), usercode varchar(30)," +
+                " nickname varchar(30), username varchar(30), unreadcount integer default (0), lasttime integer," +
+                " lastmsg varchar(2000), ctype integer default (1), mute integer default (0), istop integer default (0))";
+        String sql2 = "create table contact (usercode varchar(30), nickname varchar(30), username varchar(30)," +
+                " userhead varchar(200))";
         String sql3 = "create table message (msgid integer primary key autoincrement, msgsvrid varchar(40)," +
                 " mtype integer default (1), status integer default (1), issend integer, createtime integer, usercode varchar(30)," +
                 " mcontent varchar(2000), imgpath varchar(200), reserved varchar(20), hasread integer default (0))";

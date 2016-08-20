@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clipToPadding="true"
+             android:fitsSystemWindows="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray">
+
+        <View
+            android:id="@+id/view_for_pop"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <ListView
+            android:id="@+id/lv_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.lg.travelsong.widget.QuickIndexBar
+            android:id="@+id/qib_index"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_quickindexbar_bg"/>
+
+        <TextView
+            android:id="@+id/tv_current"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_qib_tv_bg"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+</FrameLayout>

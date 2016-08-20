@@ -57,7 +57,7 @@ public class ForgotActivity extends BaseActivity implements View.OnClickListener
         TextView tv_back = new TextView(mContext);
         tv_back.setText(R.string.find_password);
         tv_back.setTextColor(getResources().getColor(R.color.gray));
-        tv_back.setTextSize(MyDisplayUtils.sp2px(mContext, 6));
+        tv_back.setTextSize(18);
         ll_actionbar.addView(iv_back, lp);
         ll_actionbar.addView(tv_back, lp);
         //设置进actionbar
